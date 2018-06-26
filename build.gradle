@@ -8,6 +8,7 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2")
+		classpath("info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.4")
 	}
 }
 
@@ -17,6 +18,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.sonarqube'
 apply plugin: 'jacoco'
+apply plugin: 'info.solidsoft.pitest'
 
 group = 'com.rgfp.psd'
 version = '0.0.1-SNAPSHOT'
@@ -55,4 +57,14 @@ sonarqube {
 		property "sonar.java.coveragePlugin", "jacoco"
 		property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
 	}
+}
+pitest {
+	targetClasses = ["com.rgfp.psd.logbook*"]
+	excludedClasses = ["com.rgfp.psd.logbook.LogbookApplication"]
+	coverageThreshold = 50
+	mutationThreshold = 50
+	timestampedReports = false
+	outputFormats = ["XML", "HTML"]
+	excludedMethods = ["equals", "toString", "hashCode", "log*"]
+	avoidCallsTo = ["java.util.logging", "org.apache.log4j", "org.slf4j", "org.apache.commons.logging"]
 }
