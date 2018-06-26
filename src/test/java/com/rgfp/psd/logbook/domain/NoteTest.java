@@ -2,8 +2,10 @@ package com.rgfp.psd.logbook.domain;
 
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class NoteTest {
@@ -64,8 +66,45 @@ public class NoteTest {
         note.setTitle("Prueba");
         note.setContent("Esta es una prueba");
 
+        note.clone();
 
-        note.cloneNote();
     }
 
+    @Test
+    public void itShouldECloneNoteWithTheSameTitleAndSameContent (){
+        LocalDateTime hoy = LocalDateTime.now().minusDays(1);
+        Note noteClone = new Note();
+        Note note = new Note();
+        note.setTitle("Prueba");
+        note.setContent("Esta es una prueba");
+        note.setTimestamp(hoy);
+
+        noteClone = note.clone();
+
+        assertEquals(noteClone.getTitle(), note.getTitle());
+        assertEquals(noteClone.getContent(), note.getContent());
+        assertTrue(noteClone.getTimestamp().isAfter(hoy) );
+    }
+
+   /* @Test
+    public void itShouldCloneNote(){
+        Note note = new Note();
+
+        note.setContent("Prueba de contenido");
+        note.setTitle("Prueba");
+        note.setTimestamp(LocalDateTime.now());
+
+        List<Note> noteList = new ArrayList<>();
+        noteList.add(note);
+
+
+        int countNotesBefore = noteList.size();
+
+        note.clone(note.getId());
+
+        int countNotesAfter = noteList.size();
+
+        assertEquals(countNotesBefore+1,countNotesAfter);
+        //assertTrue((countNotesBefore + 1 == countNotesAfter));
+    }*/
 }

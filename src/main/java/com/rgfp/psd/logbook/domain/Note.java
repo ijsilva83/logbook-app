@@ -61,7 +61,13 @@ public class Note {
         }
         return fifteenCharacters;
     }
-    public void cloneNote (){
+    public Note clone (){
 
+        Note noteClone = new Note();
+        noteClone.setContent(this.content);
+        noteClone.setTitle(this.title);
+        noteClone.setTimestamp(LocalDateTime.now());
+
+        return noteClone;
     }
 }
