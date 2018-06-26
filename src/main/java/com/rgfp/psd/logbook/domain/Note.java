@@ -53,7 +53,15 @@ public class Note {
     }
 
     public String getSummary() {
-        // not implemented
-        return "";
+        String fifteenCharacters;
+        if (this.content.length() >= 15) {
+            fifteenCharacters = this.content.substring(0, 15);
+        } else {
+            fifteenCharacters = this.content;
+        }
+        return fifteenCharacters;
+    }
+    public void cloneNote (){
+
     }
 }
